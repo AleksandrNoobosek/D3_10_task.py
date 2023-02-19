@@ -407,3 +407,4 @@ venv/
 
 __pycache__/
 bot/__pycache__/
+*.env*

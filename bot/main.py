@@ -5,7 +5,6 @@ import os
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-
 bot = telebot.TeleBot(os.getenv('BOT_KEY'))
 openai.api_key = os.getenv('API_KEY')
 
@@ -17,7 +16,7 @@ def handle_message(message):
         model="text-davinci-003",
         prompt=message.text,
         temperature=0.5,
-        max_tokens=1000,
+        max_tokens=60,
         top_p=1.0,
         frequency_penalty=0.5,
         presence_penalty=0.0,

@@ -410,3 +410,4 @@ bot/__pycache__/
 *.env*
 *.env
 .env/
+.env

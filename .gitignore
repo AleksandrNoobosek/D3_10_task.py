@@ -407,4 +407,6 @@ venv/
 
 __pycache__/
 bot/__pycache__/
-*.evn*
+*.env*
+*.env
+.env/

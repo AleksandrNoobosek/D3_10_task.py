@@ -1,17 +1,27 @@
 
 import telebot
+import openai
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
-bot = telebot.TeleBot('6100430233:AAGrHvs0IgEWHF4wALM_8_GBgVFnZTbLGW8')
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    mess = f'Hello, {message.from_user.first_name}{message.from_user.last_name}'
-    bot.send_message(message.chat.id,mess)
+bot = telebot.TeleBot(os.getenv('BOT_KEY'))
+openai.api_key = os.getenv('API_KEY')
 
-@bot.message_handler(commands=['help'])
 
-def help(message):
-    mess_help = f'How i can help you? '
-    bot.send_message(message.chat.id,mess_help)
+@bot.message_handler(func=lambda _: True) 
 
-bot.polling(none_stop=True)
+def handle_message(message):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=message.text,
+        temperature=0.5,
+        max_tokens=1000,
+        top_p=1.0,
+        frequency_penalty=0.5,
+        presence_penalty=0.0,
+    )
+    bot.send_message(chat_id=message.from_user.id, text=response['choices'][0]['text'])
+
+bot.polling()
